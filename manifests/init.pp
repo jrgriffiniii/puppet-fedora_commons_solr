@@ -29,31 +29,23 @@
 #
 class fedora_commons::solr (
 
-  $war_path = params_lookup( 'war_path' ),
+  $fedora_commons::solr::solr_release = params_lookup( 'solr_release' )
+  $fedora_commons::solr::download_url = params_lookup( 'download_url' )
+  $fedora_commons::solr::install_dir_path = params_lookup( 'install_dir_path' )
 
-  
+  $fedora_commons::solr::servlet_engine = params_lookup( 'servlet_engine' )
+  $fedora_commons::solr::servlet_webapps_dir_path = params_lookup( 'servlet_webapps_dir_path' )
+  $fedora_commons::solr::servlet_context_dir_path = params_lookup( 'servlet_context_dir_path' )
+  $fedora_commons::solr::servlet_host = params_lookup( 'servlet_host' )
+  $fedora_commons::solr::servlet_port = params_lookup( 'servlet_port' )
+
+  $fedora_commons::solr::fedora_core_name = params_lookup( 'fedora_core_name' )
+
   ) inherits fedora_commons::solr::params {
 
-  # Work-around
-  # @todo Override catalina_home for the ::tomcat Class
-  $catalina_home = '/var/lib/tomcat'
+    # @todo Implement support for Jetty
 
-  $install_destination = '/opt/solr/solr-4.2.0/dist/solr-4.2.0.war' # @todo Resolve this issue
-  $deployment_path = '/var/lib/tomcat/webapps'
-
-  $war_path = '/opt/solr/solr-4.2.0/dist/solr-4.2.0.war' # @todo Resolve this issue
-  $install_dir_path = '/usr/share/solr'
-
-  $host = 'localhost'
-  $port = '8080'
-
-  # Islandora/Fedora Generic Search is documented as supporting Solr 4.2.0
-  # For Solr 4.2.0
-#  class { "::solr":
-
-#    install_source => 'http://archive.apache.org/dist/lucene/solr/4.2.0/solr-4.2.0.tgz',
-#    require => Tomcat::Instance['default']
-#  }
-
-
+    # Install the service
+    require $fedora_commons::solr::install
+  }
 }
