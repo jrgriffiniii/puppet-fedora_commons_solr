@@ -1,2 +1,2 @@
-# jrgriffiniii-solr-fedora-commons
-Apache Solr 4.x Module (for Fedora Commons development) for Puppet
+# jrgriffiniii-fedora_commons_solr Puppet Module
+Puppet Module for managing Apache Solr 4.x within the environment of a Fedora Commons deployment
