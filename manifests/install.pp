@@ -40,11 +40,10 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
 
   file { "${fedora_commons_solr::install_dir_path}/solr.xml":
 
-    path => '',
     content => template('fedora_commons_solr/solr.xml.erb'),
     require => Exec['install_solr']
   }
-
+  
   file { "${fedora_commons_solr::install_dir_path}/${fedora_commons_solr::fedora_core_name}":
 
     ensure => 'directory',

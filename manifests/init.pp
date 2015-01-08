@@ -35,4 +35,5 @@ class fedora_commons_solr (
 
     # Install the service
     require 'fedora_commons_solr::install'
-  }
+}
+
