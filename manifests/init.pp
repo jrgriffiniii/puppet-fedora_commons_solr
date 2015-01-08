@@ -1,23 +1,11 @@
 # == Class: fedora_commons_solr
 #
-# This is the class for solr
+# Class for managing Apache Solr 4.x (integrated with Fedora Generic Search)
 #
 #
 # == Parameters
 #
-# Standard class parameters - Define solr web app specific settings
-#
-# [*install*]
-#   Kind of installation to attempt:
-#     - package : Installs solr using the OS common packages
-#     - source  : Installs solr downloading and extracting a specific tarball or zip file
-#     - puppi   : Installs solr tarball or file via Puppi, creating the "puppi deploy solr" command
-#
-# [*install_source*]
-#   The URL from where to retrieve the source tarball/zip. Used if install => "source" or "puppi"
-#   Default is from upstream developer site. Update the version when needed.
-#
-#
+# @todo Draft
 #
 # == Examples
 #

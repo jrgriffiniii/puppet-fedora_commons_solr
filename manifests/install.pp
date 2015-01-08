@@ -1,23 +1,16 @@
-# Class: solr::install
+# Class: fedora_commons_solr::install
 #
-# This class installs solr
+# Class for the installation of Apache Solr 4.x (deployed for integrated with Fedora Generic Search)
 #
 # == Variables
 #
-# Refer to solr class for the variables defined here.
+# Inherited from fedora_commons_solr
 #
 # == Usage
 #
 # Do not use directly
 #
 class fedora_commons_solr::install inherits fedora_commons_solr {
-
-  $fedora_commons_solr::download_url
-  $fedora_commons_solr::install_dir_path
-  $fedora_commons_solr::servlet_context_dir_path
-  $fedora_commons_solr::fedora_core_name
-
-  $fedora_commons_solr::solr_release
 
   exec { 'download_solr':
 
