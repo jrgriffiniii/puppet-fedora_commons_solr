@@ -60,6 +60,6 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
 
     command => "/bin/cp /tmp/solr/${fedora_commons_solr::solr_release}/dist/${fedora_commons_solr::solr_release}.war ${fedora_commons_solr::servlet_webapps_dir_path}/solr.war",
     unless => "/usr/bin/stat ${fedora_commons_solr::servlet_webapps_dir_path}/solr.war",
-    require => Exec['solr_add_core_fedora']
+    require => Exec['decompress_solr']
   }
 }
