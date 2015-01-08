@@ -14,15 +14,15 @@
 #
 class fedora_commons_solr::params {
 
-  $fedora_commons_solr::solr_release = 'solr-4.2.0'
-  $fedora_commons_solr::download_url = 'http://archive.apache.org/dist/lucene/solr/4.2.0/solr-4.2.0.tgz'
-  $fedora_commons_solr::install_dir_path = '/usr/share/solr'
+  $solr_release = 'solr-4.2.0'
+  $download_url = 'http://archive.apache.org/dist/lucene/solr/4.2.0/solr-4.2.0.tgz'
+  $install_dir_path = '/usr/share/solr'
 
-  $fedora_commons_solr::servlet_engine = 'tomcat'
-  $fedora_commons_solr::servlet_webapps_dir_path = '/var/lib/tomcat/webapps'
-  $fedora_commons_solr::servlet_context_dir_path = '/etc/tomcat/Catalina/localhost'
-  $fedora_commons_solr::servlet_host = 'localhost'
-  $fedora_commons_solr::servlet_port = '8080'
+  $servlet_engine = 'tomcat'
+  $servlet_webapps_dir_path = '/var/lib/tomcat/webapps'
+  $servlet_context_dir_path = '/etc/tomcat/Catalina/localhost'
+  $servlet_host = 'localhost'
+  $servlet_port = '8080'
 
-  $fedora_commons_solr::fedora_core_name = 'fedora'
+  $fedora_core_name = 'fedora'
 }

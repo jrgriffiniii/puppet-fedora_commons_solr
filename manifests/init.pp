@@ -17,17 +17,17 @@
 #
 class fedora_commons_solr (
 
-  $fedora_commons_solr::solr_release = params_lookup( 'solr_release' ),
-  $fedora_commons_solr::download_url = params_lookup( 'download_url' ),
-  $fedora_commons_solr::install_dir_path = params_lookup( 'install_dir_path' ),
+  $solr_release = params_lookup( 'solr_release' ),
+  $download_url = params_lookup( 'download_url' ),
+  $install_dir_path = params_lookup( 'install_dir_path' ),
 
-  $fedora_commons_solr::servlet_engine = params_lookup( 'servlet_engine' ),
-  $fedora_commons_solr::servlet_webapps_dir_path = params_lookup( 'servlet_webapps_dir_path' ),
-  $fedora_commons_solr::servlet_context_dir_path = params_lookup( 'servlet_context_dir_path' ),
-  $fedora_commons_solr::servlet_host = params_lookup( 'servlet_host' ),
-  $fedora_commons_solr::servlet_port = params_lookup( 'servlet_port' ),
+  $servlet_engine = params_lookup( 'servlet_engine' ),
+  $servlet_webapps_dir_path = params_lookup( 'servlet_webapps_dir_path' ),
+  $servlet_context_dir_path = params_lookup( 'servlet_context_dir_path' ),
+  $servlet_host = params_lookup( 'servlet_host' ),
+  $servlet_port = params_lookup( 'servlet_port' ),
 
-  $fedora_commons_solr::fedora_core_name = params_lookup( 'fedora_core_name' )
+  $fedora_core_name = params_lookup( 'fedora_core_name' )
 
   ) inherits fedora_commons_solr::params {
 
