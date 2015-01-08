@@ -34,6 +34,5 @@ class fedora_commons_solr (
     # @todo Implement support for Jetty
 
     # Install the service
-    require fedora_commons_solr::install
+    require 'fedora_commons_solr::install'
   }
-}
