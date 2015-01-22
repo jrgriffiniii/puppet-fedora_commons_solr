@@ -1,10 +1,10 @@
-# Class: solr::install
+# Class: fedora_commons_solr::install
 #
-# This class installs solr
+# Class for the installation of Apache Solr 4.x (deployed for integrated with Fedora Generic Search)
 #
 # == Variables
 #
-# Refer to solr class for the variables defined here.
+# Inherited from fedora_commons_solr
 #
 # == Usage
 #
@@ -15,6 +15,7 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
   exec { 'download_solr':
 
     command => "/usr/bin/wget ${fedora_commons_solr::download_url} -O /tmp/solr.tgz",
+    timeout => 0,
     unless => '/usr/bin/stat /tmp/solr.tgz'
   }
 
@@ -32,6 +33,13 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
     require => Exec['decompress_solr']
   }
 
+  exec { 'install_solr_libs':
+    
+    command => "/bin/cp -r /tmp/${fedora_commons_solr::solr_release}/dist ${fedora_commons_solr::install_lib_path}",
+    unless => "/usr/bin/stat ${fedora_commons_solr::install_dir_path}",
+    require => Exec['decompress_solr']
+  }
+
   file { "${fedora_commons_solr::servlet_context_dir_path}/solr.xml":
 
     content => template('fedora_commons_solr/solr-context.xml.erb'),
@@ -44,7 +52,7 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
     content => template('fedora_commons_solr/solr.xml.erb'),
     require => Exec['install_solr']
   }
-
+  
   file { "${fedora_commons_solr::install_dir_path}/${fedora_commons_solr::fedora_core_name}":
 
     ensure => 'directory',
