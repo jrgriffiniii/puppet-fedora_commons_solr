@@ -12,13 +12,6 @@
 #
 class fedora_commons_solr::install inherits fedora_commons_solr {
 
-  $fedora_commons_solr::download_url
-  $fedora_commons_solr::install_dir_path
-  $fedora_commons_solr::servlet_context_dir_path
-  $fedora_commons_solr::fedora_core_name
-
-  $fedora_commons_solr::solr_release
-
   exec { 'download_solr':
 
     command => "/usr/bin/wget ${fedora_commons_solr::download_url} -O /tmp/solr.tgz",
@@ -41,14 +34,14 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
 
   file { "${fedora_commons_solr::servlet_context_dir_path}/solr.xml":
 
-    content => template('solr-fedora-commons/solr-context.xml.erb'),
+    content => template('fedora_commons_solr/solr-context.xml.erb'),
     require => Exec['install_solr']
   }
 
   file { "${fedora_commons_solr::install_dir_path}/solr.xml":
 
     path => '',
-    content => template('solr-fedora-commons/solr.xml.erb'),
+    content => template('fedora_commons_solr/solr.xml.erb'),
     require => Exec['install_solr']
   }
 
@@ -61,6 +54,64 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
   }
 
   # Copy the /collection1/conf into fedora/conf
+
+  # Ensure that the servlet engine is installed
+  # @todo Refactor
+  #
+  case $fedora_commons_solr::servlet_engine {
+
+    'jetty': {
+
+
+      } # @todo Implement for jetty
+      
+    'resin': {
+
+
+      } # @todo Implement for resin
+      
+    'jboss': {
+
+
+      } # @todo Implement for jboss
+
+    default: { # Default handling; Originally implemented for Apache Tomcat 7
+
+      if !defined(Package[$fedora_commons_solr::servlet_engine_package]) {
+
+        # For Red Hat family distributions, EPEL (and the related Java release) are integrated from external Puppet Modules
+        # @todo Abstract for Debian family distributions
+        package { $fedora_commons_solr::servlet_engine_package:
+
+          ensure => 'present',
+          require => Class['::java', 'epel']
+        }
+
+        # Ensure that the Apache Tomcat service is running
+        
+        if !defined( Service[$fedora_commons_solr::servlet_engine_service] ) {
+    
+          service { $servlet_engine_package:
+    
+            ensure => 'running',
+            require => Package[$fedora_commons_solr::servlet_engine_package]
+          }
+
+          # Insert the firewall rule for the servlet engine
+          # Add an iptables rule to permit traffic over the HTTP and HTTPS
+          # ensure_resource('firewall', '001 allow http and https access for Apache HTTP Server', {
+          firewall { '001 allow http and https access for the Java Servlet Engine':
+            
+            port   => [8080, 8443],
+            proto  => 'tcp',
+            action => 'accept',
+            require => Service[$fedora_commons_solr::servlet_engine_service]
+          }
+          
+          }
+        }
+      }
+}
   
 
   # Deploy Solr and restart Tomcat
@@ -68,6 +119,6 @@ class fedora_commons_solr::install inherits fedora_commons_solr {
 
     command => "/bin/cp /tmp/solr/${fedora_commons_solr::solr_release}/dist/${fedora_commons_solr::solr_release}.war ${fedora_commons_solr::servlet_webapps_dir_path}/solr.war",
     unless => "/usr/bin/stat ${fedora_commons_solr::servlet_webapps_dir_path}/solr.war",
-    require => Exec['solr_add_core_fedora']
+    require => [ Service[$fedora_commons_solr::servlet_engine_service], Exec['solr_add_core_fedora'] ]
   }
 }

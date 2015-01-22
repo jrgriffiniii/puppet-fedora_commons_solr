@@ -1,0 +1,13 @@
+fixtures:
+
+  forge_modules:
+
+    puppi: "example42/puppi"
+    stdlib: 'puppetlabs/stdlib'
+
+    epel: 'stahnma/epel'
+
+    firewall: 'puppetlabs/firewall'
+
+  symlinks:
+    fedora_commons_solr: "#{source_dir}"
